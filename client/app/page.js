@@ -5,10 +5,9 @@ const getData = async () => {
     const response = await fetch("http://localhost:5001/api/users", {
       cache: "no-cache",
     })
-
     const data = await response.json()
-
-    return data.users
+    
+    return data
   } catch (err) {
     console.error(err)
   }
@@ -24,7 +23,7 @@ const Home = async () => {
   return (
     <div>
       {data.map((user) => (
-        <div key={user.id}>{user.name}</div>
+        <div key={user._id}>{user.email}</div>
       ))}
     </div>
   )

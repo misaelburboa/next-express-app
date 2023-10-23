@@ -16,8 +16,6 @@ export const authenticateUser = async (email, password) => {
     (user) => user.email === email && user.password === password
   )
 
-  console.log(user);
-
   if (!user) {
     throw new InvalidCredentialsException()
   }

@@ -27,3 +27,9 @@ This exercise is meant showcase your creativity and talent in problem solving ag
 * Fully responsive UI
 * Unit Tests of the API
 * Functional Tests of the UI
+
+## How to start the project
+
+* cd to the folder client and run `yarn dev`
+* cd to the api folder and run `npm start`
+* go to `http://localhost:3000`

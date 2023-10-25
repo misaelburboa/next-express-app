@@ -110,7 +110,7 @@ export const ProfileForm = () => {
         company: data?.company ? data?.company : "",
         eyeColor: data?.eyeColor ? data?.eyeColor : "",
         password: data?.password ? data?.password : "",
-        picture: data?.picture ? data?.picture : "http://placehold.it/32x32",
+        picture: data?.picture ? data?.picture : "",
       }}
       validationSchema={validationSchema}
       onSubmit={handleSubmit}

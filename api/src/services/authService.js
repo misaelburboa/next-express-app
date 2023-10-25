@@ -20,7 +20,7 @@ export const authenticateUser = async (email, password) => {
     throw new InvalidCredentialsException()
   }
 
-  const expires = Math.floor(Date.now() / 1000) + 60 * 60
+  const expires = Math.floor(Date.now() / 1000) + 60 * 60 * 8
   return {
     token: jwt.sign(
       {

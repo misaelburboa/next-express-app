@@ -4,8 +4,12 @@ const nextConfig = {
     return [
       // Rewrites all API request to the express server
       {
-        source: "/api/:path*",
-        destination: "http://localhost:5000/api/:path*",
+        source: "/api/users/:path*",
+        destination: "http://localhost:5000/api/users/:path*",
+      },
+      {
+        source: "/api/authentication/:path*",
+        destination: "http://localhost:5000/api/auth/:path*",
       },
     ]
   },

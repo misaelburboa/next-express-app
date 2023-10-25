@@ -1,5 +1,7 @@
-export const FormLabel = ({ text, style }) => (
+export const FormLabel = ({ text, className, htmlFor }) => (
   <>
-    <label style={style}>{text}</label>
+    <label htmlFor={htmlFor} className="form-label">
+      {text}
+    </label>
   </>
 )

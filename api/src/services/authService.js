@@ -20,12 +20,16 @@ export const authenticateUser = async (email, password) => {
     throw new InvalidCredentialsException()
   }
 
-  return jwt.sign(
-    {
-      // Expires in 1hr
-      exp: Math.floor(Date.now() / 1000) + 60 * 60,
-      data: { id: user._id, email: user.email },
-    },
-    secretKey
-  )
+  const expires = Math.floor(Date.now() / 1000) + 60 * 60
+  return {
+    token: jwt.sign(
+      {
+        // Expires in 1hr
+        exp: expires,
+        data: { id: user._id, email: user.email },
+      },
+      secretKey
+    ),
+    expires,
+  }
 }

@@ -11,7 +11,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cors())
 
-app.use("/api", authRoutes)
+app.use("/api/authentication", authRoutes)
 app.use("/api/users", usersRoutes)
 
 createConnection()

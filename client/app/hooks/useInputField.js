@@ -28,6 +28,7 @@ export const useInputField = ({
     value,
     onBlur,
     onChange,
+    isInvalidField,
     ...props,
   }
 }

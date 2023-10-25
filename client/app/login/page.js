@@ -1,85 +1,81 @@
-"use client"
+import LoginForm from "@/app/login/LoginForm"
+import { getServerSession } from "next-auth"
+import { redirect } from "next/navigation"
 
-import { useState } from "react"
-import { ErrorMessage, Form, Formik, useFormik } from "formik"
-import * as Yup from "yup"
-import { redirect, useRouter } from "next/navigation"
-
-import { InputField } from "@/app/components/InputField"
-import { FormLabel } from "@/app/components/FormLabel"
-import Cookies from "js-cookie"
-
-export const loginSchema = Yup.object().shape({
-  email: Yup.string().email().required("Required"),
-  password: Yup.string().required("Required"),
-})
-
-const LoginForm = () => {  
-  const router = useRouter()
-  const [error, setError] = useState("")
-
-  const token = Cookies.get('token')
-
-  // TODO: also validate the validity of the token otherwise the user could start jumping from
-  // profile page to this.
-  if (token) {
-    router.replace("/profile")
+export default async function LoginPage() {
+  const session = await getServerSession()
+  if (session) {
+    redirect("/profile")
   }
-
-  const handleSubmit = async (formValues, { setSubmitting }) => {
-    try {
-      const response = await fetch("http://localhost:5001/api/login", {
-        body: JSON.stringify(formValues),
-        method: "POST",
-        mode: "cors",
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-      })
-
-      const data = await response.json()
-
-      if (data.token) {
-        // document.cookie = `token=${data.token}; path=/`
-        Cookies.set('token', data.token)
-        router.push("/profile")
-
-      } else if (data.error) {
-        setError(data.error)
-      }
-    } catch (error) {
-      throw new Error(error)
-    }
-
-    setSubmitting(false)
-  }
-
-  return (
-    <Formik
-      initialValues={{
-        email: "",
-        password: "",
-      }}
-      validationSchema={loginSchema}
-      onSubmit={handleSubmit}
-    >
-      <Form id="loginform">
-        <div>{error.message}</div>
-        <FormLabel text="Email:" />
-        <InputField type="text" name="email" />
-        <ErrorMessage name="email" />
-
-        <FormLabel text="Password: " />
-        <InputField type="password" name="password" />
-        <ErrorMessage name="password" />
-
-        <button form="loginform" type="submit">
-          Login
-        </button>
-      </Form>
-    </Formik>
-  )
+  return <LoginForm />
 }
 
-export default LoginForm
+// "use client"
+
+// import ButtonAuth from "@/app/login/ButtonAuth"
+// import { signIn } from "next-auth/react"
+// import { useRouter } from "next/navigation"
+// import { useState } from "react"
+
+// const LoginPage = () => {
+//   const [errors, setErrors] = useState([])
+//   const [email, setEmail] = useState("test@test.com")
+//   const [password, setPassword] = useState("123123")
+//   const router = useRouter()
+
+//   const handleSubmit = async (event) => {
+//     event.preventDefault()
+//     setErrors([])
+
+//     const responseNextAuth = await signIn("credentials", {
+//       email,
+//       password,
+//       redirect: false,
+//     })
+
+//     if (responseNextAuth?.error) {
+//       setErrors(responseNextAuth.error.split(","))
+//       return
+//     }
+
+//     router.push("/dashboard")
+//   }
+
+//   return (
+//     <div>
+//       <h1>Login</h1>
+//       <form onSubmit={handleSubmit}>
+//         <input
+//           type="email"
+//           placeholder="test@test.com"
+//           name="email"
+//           className="form-control mb-2"
+//           value={email}
+//           onChange={(event) => setEmail(event.target.value)}
+//         />
+//         <input
+//           type="password"
+//           placeholder="123123"
+//           name="password"
+//           className="form-control mb-2"
+//           value={password}
+//           onChange={(event) => setPassword(event.target.value)}
+//         />
+//         <button type="submit" className="btn btn-primary">
+//           Login
+//         </button>
+//       </form>
+//       <ButtonAuth />
+//       {errors.length > 0 && (
+//         <div className="alert alert-danger mt-2">
+//           <ul className="mb-0">
+//             {errors.map((error) => (
+//               <li key={error}>{error}</li>
+//             ))}
+//           </ul>
+//         </div>
+//       )}
+//     </div>
+//   )
+// }
+// export default LoginPage

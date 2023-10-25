@@ -34,10 +34,21 @@ router.get("/profile", isAuth, async ({ user }, res) => {
 router.put("/profile", isAuth, async ({ user, body }, res) => {
   const { id } = user.data
 
-  try {
-    const updatedUser = await updateUser(id, body)
+  const updatedUser = {
+    ...body,
+    name: {
+      first: body.fname,
+      last: body.lname,
+    },
+  }
 
-    return res.status(200).json(updatedUser)
+  delete updatedUser.fname
+  delete updatedUser.lname
+
+  try {
+    const user = await updateUser(id, updatedUser)
+
+    return res.status(200).json(user)
   } catch (error) {
     if (error instanceof NotFoundException) {
       return res.status(error.status).json({ error })

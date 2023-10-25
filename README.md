@@ -30,6 +30,8 @@ This exercise is meant showcase your creativity and talent in problem solving ag
 
 ## How to start the project
 
-* cd to the folder client and run `yarn dev`
-* cd to the api folder and run `npm start`
+* clone the project
+* cd to the project folder
+* cd to the folder client and run `yarn install` after that you should be able to run `yarn dev`
+* cd to the api folder and run `npm install` after that please run `npm start`
 * go to `http://localhost:3000`

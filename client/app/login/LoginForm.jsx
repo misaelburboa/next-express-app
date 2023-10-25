@@ -8,6 +8,9 @@ import { useRouter } from "next/navigation"
 import { InputField } from "@/app/components/InputField"
 import { FormLabel } from "@/app/components/FormLabel"
 import { useState } from "react"
+import clsx from "clsx"
+
+import * as styles from "./LoginForm.module.css"
 
 export const loginSchema = Yup.object().shape({
   email: Yup.string().email().required("Required"),
@@ -53,17 +56,13 @@ const LoginForm = () => {
           </div>
         )}
 
-        <div className="container shadow-lg p-3 mt-5 bg-body rounded w-50">
+        <div className={clsx("container shadow-lg p-3 mt-md-5 rounded", styles.loginContainer)}>
           <div className="mb-3">
             <InputField type="email" name="email" label="Email" />
           </div>
 
           <div className="mb-3">
-            <InputField
-              type="password"
-              name="password"
-              label="Password"
-            />
+            <InputField type="password" name="password" label="Password" />
           </div>
 
           <button form="loginform" type="submit" className="btn btn-primary">
